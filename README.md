@@ -1,5 +1,12 @@
 # Multimodal Vision & Batch Intelligence Platform
 
+[![Live Web Dashboard](https://img.shields.io/badge/Live_Dashboard-GitHub_Pages-6366f1?style=for-the-badge&logo=google-chrome&logoColor=white)](https://sophiexuxlx-source.github.io/multimodal-vision-batch-analyzer/)
+[![Gemini 3.6 Flash](https://img.shields.io/badge/Model-Gemini_3.6_Flash-06b6d4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![WCAG 2.2 AAA](https://img.shields.io/badge/Accessibility-WCAG_AAA-10b981?style=for-the-badge)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+
+> 🌐 **Interactive Live Web App**: Experience the zero-shot scene explorer, WCAG alt-text generator, structured JSON inspector, and GEOS-5 atmospheric keyframe viewer directly in your browser:  
+> **[https://sophiexuxlx-source.github.io/multimodal-vision-batch-analyzer/](https://sophiexuxlx-source.github.io/multimodal-vision-batch-analyzer/)**
+
 An end-to-end multimodal computer vision application and batch intelligence pipeline powered by Google Gemini Vision LLMs (`gemini-3.6-flash`). Automates visual content comprehension, WCAG-compliant web accessibility alt-text generation, structured JSON object extraction, and video temporal keyframe analysis across large-scale image repositories.
 
 ---

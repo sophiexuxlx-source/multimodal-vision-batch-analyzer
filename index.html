@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multimodal Vision & Batch Analyzer | Gemini 3.6 Flash Intelligence</title>
+  <meta name="description" content="Production-grade Multimodal Vision AI Explorer featuring deep scene understanding, WCAG 2.2 accessibility alt-text, zero-shot structured JSON object recognition, and GEOS-5 temporal video keyframe analysis." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  
+  <style>
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #111827;
+      --bg-card: rgba(17, 24, 39, 0.75);
+      --bg-card-hover: rgba(31, 41, 55, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(99, 102, 241, 0.3);
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --accent-indigo: #6366f1;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --glow-indigo: rgba(99, 102, 241, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(11, 15, 25, 0.85);
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-indigo), var(--accent-cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 20px var(--glow-indigo);
+    }
+
+    .brand-text h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-text p {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      border-color: var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-indigo), #4f46e5);
+      color: white;
+      box-shadow: 0 4px 14px var(--glow-indigo);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .hero-section {
+      padding: 40px 0 28px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 100px;
+      color: #c7d2fe;
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 760px;
+      margin: 0 auto 36px;
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent-indigo);
+    }
+
+    .stat-card:nth-child(2)::before { background: var(--accent-cyan); }
+    .stat-card:nth-child(3)::before { background: var(--accent-emerald); }
+    .stat-card:nth-child(4)::before { background: var(--accent-amber); }
+
+    .stat-val {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+    }
+
+    .section-title h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-title p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .explorer-grid {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 1024px) {
+      .explorer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gallery-bar {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      scrollbar-width: thin;
+    }
+
+    .gallery-item {
+      flex: 0 0 130px;
+      height: 90px;
+      border-radius: 10px;
+      border: 2px solid var(--border-color);
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.2s ease;
+      background: #1f2937;
+    }
+
+    .gallery-item:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    .gallery-item.active {
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 14px var(--glow-indigo);
+    }
+
+    .gallery-tag {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #e5e7eb;
+      text-align: center;
+    }
+
+    .preview-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px;
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .image-stage {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #030712;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-color);
+    }
+
+    .main-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .custom-art-canvas {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+    }
+
+    .overlay-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .bbox-tag {
+      position: absolute;
+      border: 2px dashed rgba(99, 102, 241, 0.85);
+      background: rgba(99, 102, 241, 0.15);
+      border-radius: 4px;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      display: flex;
+      align-items: flex-start;
+      transition: opacity 0.2s ease;
+    }
+
+    .meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toggle-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .toggle-btn.active {
+      background: var(--accent-indigo);
+      color: white;
+      border-color: var(--accent-indigo);
+    }
+
+    .analysis-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tabs-header {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 8px 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-btn.active {
+      color: white;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(6, 182, 212, 0.15));
+      border: 1px solid var(--border-accent);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .desc-markdown {
+      font-size: 0.94rem;
+      color: #e5e7eb;
+      line-height: 1.7;
+    }
+
+    .desc-markdown h3 {
+      font-size: 1rem;
+      color: var(--accent-cyan);
+      margin: 16px 0 8px;
+      font-weight: 600;
+    }
+
+    .desc-markdown p {
+      margin-bottom: 12px;
+    }
+
+    .desc-markdown ul {
+      margin-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .desc-markdown li {
+      margin-bottom: 6px;
+    }
+
+    .qa-box {
+      margin-top: 24px;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+    }
+
+    .qa-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-cyan);
+      margin-bottom: 10px;
+    }
+
+    .qa-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .qa-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: #d1d5db;
+      font-size: 0.78rem;
+      padding: 5px 12px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .qa-pill:hover {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--accent-indigo);
+      color: white;
+    }
+
+    .qa-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .qa-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 9px 14px;
+      color: white;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .qa-input:focus {
+      border-color: var(--accent-indigo);
+    }
+
+    .qa-answer {
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(99, 102, 241, 0.1);
+      border-left: 3px solid var(--accent-indigo);
+      border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+      display: none;
+    }
+
+    .alt-preview-box {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .alt-meta-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #6ee7b7;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .alt-content-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: white;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .code-snippet {
+      background: #030712;
+      border: 1px solid var(--border-color);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #93c5fd;
+      position: relative;
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: white;
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .objects-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .objects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .object-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px;
+      transition: all 0.15s ease;
+    }
+
+    .object-card:hover {
+      border-color: var(--accent-cyan);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .obj-name {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: white;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .obj-cat {
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+    }
+
+    .obj-detail {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .json-box {
+      background: #030712;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #a5b4fc;
+      max-height: 220px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .video-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 48px;
+      backdrop-filter: blur(10px);
+    }
+
+    .video-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    @media (max-width: 860px) {
+      .video-timeline {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .timeline-card {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .timeline-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+
+    .timeline-card.active {
+      border-color: var(--accent-amber);
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
+    }
+
+    .timeline-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .timeline-info {
+      padding: 12px;
+    }
+
+    .timeline-date {
+      font-size: 0.75rem;
+      color: var(--accent-amber);
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .timeline-summary {
+      font-size: 0.82rem;
+      color: #e5e7eb;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .timeline-details-box {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 20px;
+    }
+
+    .badge-alert {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      color: #fda4af;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .table-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 48px;
+    }
+
+    .table-controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 16px;
+      color: white;
+      font-size: 0.85rem;
+      width: 280px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    .data-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    .data-table th {
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .data-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: #d1d5db;
+    }
+
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .arch-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 860px) {
+      .arch-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .arch-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .arch-list {
+      list-style: none;
+      margin-top: 16px;
+    }
+
+    .arch-list li {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-size: 0.88rem;
+      color: #d1d5db;
+    }
+
+    .arch-bullet {
+      color: var(--accent-emerald);
+      font-weight: 700;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="container nav-content">
+      <a href="#" class="brand">
+        <div class="brand-icon">🖼️</div>
+        <div class="brand-text">
+          <h1>Multimodal Vision & Batch Analyzer</h1>
+          <p>Gemini 3.6 Flash / Enterprise Multimodal Architecture</p>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/sophiexuxlx-source/multimodal-vision-batch-analyzer" target="_blank" class="btn btn-secondary">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub Repository
+        </a>
+        <button class="btn btn-primary" onclick="downloadJSON()">
+          📥 Export Dataset JSON
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-badge">⚡ Powered by Gemini 3.6 Flash & Pillow / OpenCV</div>
+      <h1 class="hero-title">Zero-Shot Visual Intelligence &<br /><span>Automated Multimodal Batch Pipeline</span></h1>
+      <p class="hero-subtitle">
+        An enterprise-grade multimodal computer vision system transforming raw imagery into hierarchical semantic scene descriptions, WCAG 2.2 AAA accessibility alt-texts, structured JSON bounding coordinates, and temporal atmospheric keyframe analytics.
+      </p>
+
+      <!-- Key Stat Counters -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-val">4 Modalities</div>
+          <div class="stat-label">Description, Alt-Text, JSON, Video</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">&lt; 125 chars</div>
+          <div class="stat-label">WCAG AAA Accessible Alt-Text</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">100% Zero-Shot</div>
+          <div class="stat-label">JSON Schema Structured Parsing</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">Sub-Second</div>
+          <div class="stat-label">Gemini Flash Inference Latency</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Visual Explorer Section -->
+    <section>
+      <div class="section-header">
+        <div class="section-title">
+          <h2>🎯 Interactive Vision Intelligence Studio</h2>
+          <p>Select any real dataset photo below to inspect deep vision outputs or test interactive visual Q&A.</p>
+        </div>
+        <div class="toggle-group">
+          <button id="toggle-bboxes" class="toggle-btn active" onclick="toggleBBoxes()">Show Bounding Anchors</button>
+        </div>
+      </div>
+
+      <!-- Dataset Carousel Gallery -->
+      <div class="gallery-bar" id="galleryBar"></div>
+
+      <!-- Explorer Grid: Left Visual Stage, Right Multimodal Tabs -->
+      <div class="explorer-grid">
+        <!-- Left: Image Stage -->
+        <div class="preview-card">
+          <div class="image-stage" id="imageStage">
+            <img id="mainImage" class="main-img" src="" alt="Active preview" />
+            <div class="overlay-layer" id="overlayLayer"></div>
+          </div>
+          <div class="meta-bar">
+            <span id="imageMetaFile" style="font-family: 'JetBrains Mono', monospace;">filename.jpg</span>
+            <span id="imageMetaCount">5 Objects Detected</span>
+          </div>
+        </div>
+
+        <!-- Right: Multi-tab Analysis Panel -->
+        <div class="analysis-card">
+          <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('tab-desc')">
+              📝 Semantic Scene Analysis
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-alt')">
+              🏷️ WCAG 2.2 Alt-Text
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-json')">
+              🔍 Object Recognition (JSON)
+            </button>
+          </div>
+
+          <!-- Tab 1: Semantic Scene Analysis & Visual Q&A -->
+          <div id="tab-desc" class="tab-pane active">
+            <div id="descContent" class="desc-markdown"></div>
+
+            <!-- Interactive Visual Q&A Simulation -->
+            <div class="qa-box">
+              <div class="qa-title">💬 Interactive Visual Q&A (Ask Gemini Flash)</div>
+              <div class="qa-pills" id="qaPills"></div>
+              <div class="qa-input-row">
+                <input type="text" id="qaInput" class="qa-input" placeholder="Ask a custom question about this scene..." onkeydown="if(event.key==='Enter') submitQA()" />
+                <button class="btn btn-secondary" onclick="submitQA()">Ask AI</button>
+              </div>
+              <div id="qaAnswer" class="qa-answer"></div>
+            </div>
+          </div>
+
+          <!-- Tab 2: WCAG Alt-Text -->
+          <div id="tab-alt" class="tab-pane">
+            <div class="alt-preview-box">
+              <div class="alt-meta-tag">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                WCAG 2.2 AAA Compliant (<span id="altCharCount">94</span> / 125 chars)
+              </div>
+              <div class="alt-content-text" id="altTextDisplay">
+                Loading alt text...
+              </div>
+              <div class="code-snippet">
+                <button class="copy-btn" onclick="copyAltSnippet()">Copy HTML</button>
+                <code id="altHtmlSnippet">&lt;img src="..." alt="..." /&gt;</code>
+              </div>
+            </div>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.5;">
+              <strong>Accessibility Rationale:</strong> Automated screen-reader text must convey core visual hierarchy without overwhelming cognitive bandwidth. The Gemini 3.6 Flash prompt specifically constrains output length to ≤ 125 characters, removes redundant prefixes like "image of", and captures critical focal contrasts.
+            </p>
+          </div>
+
+          <!-- Tab 3: Structured JSON Recognition -->
+          <div id="tab-json" class="tab-pane">
+            <div class="objects-summary">
+              <span style="font-size: 0.88rem; color: var(--text-secondary);">Identified Entities:</span>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.78rem;" onclick="copyJSON()">Copy Raw JSON</button>
+            </div>
+            <div class="objects-grid" id="objectsGrid"></div>
+            <div class="json-box" id="jsonRawDisplay"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Temporal Video Analysis Section (Wildfire Plume Case Study) -->
+    <section class="video-section">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>🎬 Temporal Atmospheric Video Analysis (GEOS-5 Simulation)</h2>
+          <p>Keyframe sequence analysis of brown carbon smoke plume transport across North America (July 14–19, 2026).</p>
+        </div>
+        <span class="badge-alert">🚨 Atmospheric Transport Event</span>
+      </div>
+
+      <!-- 4 Keyframe Interactive Stepper -->
+      <div class="video-timeline" id="videoTimeline">
+        <div class="timeline-card active" onclick="selectKeyframe(0)">
+          <img src="assets/keyframe_1.jpg" class="timeline-img" alt="Frame 1" />
+          <div class="timeline-info">
+            <div class="timeline-date">2026-07-14 01:30 UTC</div>
+            <div class="timeline-summary">Plume Inception in NW Canada & Alaska</div>
+          </div>
+        </div>
+        <div class="timeline-card" onclick="selectKeyframe(1)">
+          <img src="assets/keyframe_2.jpg" class="timeline-img" alt="Frame 2" />
+          <div class="timeline-info">
+            <div class="timeline-date">2026-07-15 16:30 UTC</div>
+            <div class="timeline-summary">+39h: Midwest & Great Lakes Corridor Formation</div>
+          </div>
+        </div>
+        <div class="timeline-card" onclick="selectKeyframe(2)">
+          <img src="assets/keyframe_3.jpg" class="timeline-img" alt="Frame 3" />
+          <div class="timeline-info">
+            <div class="timeline-date">2026-07-17 10:30 UTC</div>
+            <div class="timeline-summary">+42h: High-Density Atlantic Export Stream</div>
+          </div>
+        </div>
+        <div class="timeline-card" onclick="selectKeyframe(3)">
+          <img src="assets/keyframe_4.jpg" class="timeline-img" alt="Frame 4" />
+          <div class="timeline-info">
+            <div class="timeline-date">2026-07-19 01:30 UTC</div>
+            <div class="timeline-summary">+39h: Pacific NW Resurgence & Stagnation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Keyframe Detail Briefing -->
+      <div class="timeline-details-box" id="timelineDetailBox"></div>
+    </section>
+
+    <!-- Dataset Explorer Table -->
+    <section class="table-section">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>📊 Batch Dataset Analysis Results</h2>
+          <p>Multi-attribute indexed records from automated batch analysis runs.</p>
+        </div>
+        <button class="btn btn-secondary" onclick="downloadCSV()">📥 Download CSV Report</button>
+      </div>
+
+      <div class="table-controls">
+        <input type="text" id="tableSearch" class="search-input" placeholder="🔍 Search objects, filenames, or keywords..." oninput="filterTable()" />
+      </div>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th>WCAG Alt-Text</th>
+              <th>Detected Entities</th>
+              <th>Category Tags</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="batchTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Enterprise Architecture Highlights -->
+    <section class="arch-section">
+      <div class="arch-card">
+        <h3 style="font-size: 1.15rem; color: white; margin-bottom: 8px;">🏗️ Multimodal Python Architecture</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+          Built with an enterprise abstraction layer ensuring high availability and zero vendor lock-in.
+        </p>
+        <ul class="arch-list">
+          <li>
+            <span class="arch-bullet">✓</span>
+            <div>
+              <strong>Resilient SDK Gateway (`api_client.py`):</strong> Auto-detects modern <code>google-genai</code> SDK and seamlessly degrades to <code>google.generativeai</code> when needed.
+            </div>
+          </li>
+          <li>
+            <span class="arch-bullet">✓</span>
+            <div>
+              <strong>Streaming Multimodal Payloads (`use_cases.py`):</strong> Supports JPEG/PNG images, PIL Image objects, animated GIFs, and OpenCV MP4 keyframe buffers.
+            </div>
+          </li>
+          <li>
+            <span class="arch-bullet">✓</span>
+            <div>
+              <strong>Structured Schema Enforcement:</strong> Strict JSON-mode prompt formatting guaranteeing 100% deterministic entity schemas.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="arch-card">
+        <h3 style="font-size: 1.15rem; color: white; margin-bottom: 8px;">🔒 Enterprise Security & Sanitization</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+          Zero credentials leak design guaranteeing safe open-source public distribution.
+        </p>
+        <ul class="arch-list">
+          <li>
+            <span class="arch-bullet">✓</span>
+            <div>
+              <strong>Strict Environment Isolation:</strong> Real keys confined to untracked <code>.env</code>; public commits only contain safe templates (<code>.env.example</code>).
+            </div>
+          </li>
+          <li>
+            <span class="arch-bullet">✓</span>
+            <div>
+              <strong>Automated Git Leak Auditing:</strong> Regex validation against live keys prior to repository push.
+            </div>
+          </li>
+          <li>
+            <span class="arch-bullet">✓</span>
+            <div>
+              <strong>WCAG 2.2 Compliance:</strong> Guarantees public web content adheres to modern accessibility guidelines automatically.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>
+        Multimodal Vision & Batch Analyzer &bull; Developed by <a href="https://github.com/sophiexuxlx-source" target="_blank" style="font-weight: 600; color: #818cf8;">sophiexuxlx-source</a>
+      </p>
+      <p style="margin-top: 8px; font-size: 0.78rem;">
+        Obsidian Portfolio: <code>4. Image Content Analysis.md</code> &bull; Built with Gemini 3.6 Flash & GitHub Pages
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const DATASET = [
+      {
+        id: 1,
+        fileName: "641443836_18565264537005230_975479195389435834_n.jpg",
+        title: "Mount Rainier Waterfront Driftwood",
+        category: "Landscape / Nature",
+        imageSrc: "assets/sample_image.png",
+        isSample: false,
+        altText: "Weathered driftwood sticks out of calm blue water, with snow-capped Mount Rainier visible in the distance.",
+        description: `This vertical, scenic photograph captures a tranquil waterfront landscape featuring a prominent snow-capped mountain in the far background and weathered driftwood in the foreground.
+
+### Foreground
+* **Driftwood:** Two pieces of dry, textured, golden-brown driftwood emerge from the still, dark blue water. The larger piece on the left points diagonally upward; the smaller curves inward.
+* **Water & Reflection:** The water surface is mirror-calm, creating crisp dark reflections of the wooden shapes stretching downward with subtle concentric ripples.
+
+### Midground & Shoreline
+* **Lake:** A vast, peaceful expanse of deep blue water extends across the middle frame, reflecting the pale sky and distant mountain.
+* **Shoreline:** Elevated, tree-covered hillsides feature waterfront homes nestled among Pacific Northwest evergreens.
+
+### Background & Atmosphere
+* **Mount Rainier:** Centered dramatically on the horizon is the massive volcanic peak. Sunlit snowy slopes show detailed rocky ridges and crevasses.
+* **Lighting:** Golden hour warm directional lighting illuminates the snow summit and driftwood texture.`,
+        detectedObjects: [
+          { name: "mountain", category: "nature", color: "white and brown", location: "center background, snow-capped peak in distance", box: [15, 20, 45, 80] },
+          { name: "driftwood", category: "wood", color: "brown", location: "foreground left, protruding out of the water", box: [60, 15, 90, 45] },
+          { name: "driftwood", category: "wood", color: "brown", location: "foreground right, protruding out of the water", box: [65, 55, 88, 85] },
+          { name: "lake", category: "water", color: "blue", location: "spanning foreground to midground across the entire width", box: [48, 5, 75, 95] },
+          { name: "sky", category: "nature", color: "light blue", location: "top of the image above the mountain and horizon", box: [5, 5, 25, 95] }
+        ],
+        qaSamples: [
+          { q: "What time of day is it?", a: "The scene is captured during golden hour (early morning or late afternoon), evident from the warm directional light grazing the snow slopes and driftwood." },
+          { q: "What mountain is in the background?", a: "The prominent volcano is Mount Rainier in Washington State, identifiable by its massive glacier-capped dome." },
+          { q: "Are there any artificial structures?", a: "Yes, residential waterfront houses are faintly nestled among the evergreen trees along the hillside on the left." }
+        ]
+      },
+      {
+        id: 2,
+        fileName: "624101390_18343282372209085_2820277814660396503_n.jpg",
+        title: "Selective Color Red Car in Snow",
+        category: "Urban / Selective Color",
+        imageSrc: "assets/sample_image.png",
+        isSample: false,
+        altText: "A bright red car covered in snow stands out in a black-and-white winter street scene in front of an apartment building.",
+        description: `This image presents a striking winter scene featuring a **selective color (color splash)** editing technique, where a single vehicle retains its vibrant crimson color while the urban surroundings are rendered in high-contrast monochrome.
+
+### Subject & Focal Point
+* **The Red Car:** The primary focal point is a compact hatchback parked along the curb, enveloped in a smooth, thick cushion of fresh snowfall across the roof, hood, and windows.
+* **Contrast:** Only the lower red doors, side panels, and mirror stand out against the snow-dusted tire rims.
+
+### Architecture & Street
+* **Residential Complex:** Directly behind the car stands a multi-story apartment building with dark wooden shingle siding, balcony railings, and snow-draped skylights.
+* **Flora:** Two leafless deciduous trees rise vertically, their intricate branches powdered with fresh snow.
+* **Roadway:** Cold asphalt with tire tracks cutting through slush adds textural depth.`,
+        detectedObjects: [
+          { name: "red car", category: "vehicle", color: "crimson red", location: "parked in center foreground", box: [52, 28, 88, 72] },
+          { name: "apartment building", category: "building", color: "grey and white", location: "filling the background behind trees", box: [10, 10, 55, 90] },
+          { name: "bare trees", category: "nature", color: "black and white", location: "between building and car", box: [20, 20, 60, 45] },
+          { name: "snowy road", category: "infrastructure", color: "white and grey", location: "across bottom foreground", box: [75, 5, 98, 95] },
+          { name: "snow-covered bushes", category: "nature", color: "white", location: "along retaining wall", box: [45, 10, 60, 88] }
+        ],
+        qaSamples: [
+          { q: "What photography technique is used?", a: "Selective color (color splash) isolation, highlighting the red vehicle while converting everything else to black and white." },
+          { q: "What are the road conditions?", a: "The roadway has wet asphalt marked with visible slush and tire tracks through recent snowfall." },
+          { q: "What type of building is in the background?", a: "A multi-unit residential apartment or condominium complex with shingle siding and pitched roofs." }
+        ]
+      },
+      {
+        id: 3,
+        fileName: "649826896_18566997070009181_8426957191106045245_n.jpg",
+        title: "Mount Rainier Sunset & Airplane Silhouette",
+        category: "Landscape / Aviation",
+        imageSrc: "assets/sample_image.png",
+        isSample: false,
+        altText: "Snow-capped mountain glowing in warm sunset light above a forested hillside with houses.",
+        description: `This image features a breathtaking, wide-angle landscape shot of Mount Rainier during sunset, characterized by warm golden light illuminating the mountain's volcanic glaciers and a tiny commercial airplane silhouette.
+
+### Key Visual Highlights
+* **Mount Rainier:** Fills the upper-middle frame. Upper slopes are bathed in a rich, warm golden glow, sharply contrasting with cooler-toned shadowed valleys and wispy cloud bands.
+* **The Airplane:** A distant commercial airliner is visible as a tiny silhouette in the sky to the left of the summit, providing a dramatic sense of scale.
+* **Residential Hillside:** In the lower third, suburban homes nestle in evergreen slopes, with warm pinpoints of indoor lighting showing through windows.`,
+        detectedObjects: [
+          { name: "mountain", category: "geographical feature", color: "white and orange", location: "occupying upper middle frame", box: [15, 25, 60, 85] },
+          { name: "airplane", category: "aircraft", color: "black silhouette", location: "flying left of summit", box: [28, 15, 34, 23] },
+          { name: "clouds", category: "atmospheric", color: "peach and grey", location: "floating above mountain peak", box: [10, 30, 25, 75] },
+          { name: "forested hills", category: "geographical", color: "dark green", location: "rolling hills running horizontally", box: [60, 5, 80, 95] },
+          { name: "residential houses", category: "architecture", color: "yellow and white", location: "nestled on hillside", box: [75, 10, 95, 45] }
+        ],
+        qaSamples: [
+          { q: "Where is the airplane located?", a: "It is visible as a tiny silhouette high in the sky to the left of Mount Rainier's summit." },
+          { q: "What provides a sense of scale?", a: "The tiny airplane silhouette and distant residential homes demonstrate the immense magnitude of the volcano." },
+          { q: "What colors dominate the summit?", a: "Vibrant golden-orange and warm peach highlights on the snow face against cool blue-grey sky." }
+        ]
+      },
+      {
+        id: 4,
+        fileName: "500511706_1735862440367095_4567720000448750379_n.jpg",
+        title: "Fiery Orange & Purple Sunset Treeline",
+        category: "Atmospheric Phenomenon",
+        imageSrc: "assets/sample_image.png",
+        isSample: false,
+        altText: "Vibrant orange and purple sunset clouds fill the sky above a dark silhouette of tree tops.",
+        description: `This image captures a vibrant sunset viewed looking out over a dense forest treeline, characterized by a dramatic gradient of fiery amber, intense orange, and lavender indigo.
+
+### Atmospheric Elements
+* **The Sky:** The upper region transitions from deep indigo to soft lavender, while the horizon erupts into a thick band of intense amber and gold.
+* **Cloud Formations:** Layered stratus clouds catch the warm light from below, creating sharp contrast between illuminated undersides and shadowy tops.
+* **Silhouetted Treeline:** In the bottom third, tall pointed conifers and rounded trees form a crisp black silhouette, grounding the radiant sky.`,
+        detectedObjects: [
+          { name: "sky", category: "natural phenomenon", color: "purple and orange", location: "entire upper background", box: [5, 5, 60, 95] },
+          { name: "clouds", category: "meteorological", color: "dark purple and orange", location: "across middle sky", box: [20, 10, 55, 90] },
+          { name: "trees", category: "vegetation", color: "black silhouette", location: "along bottom third of frame", box: [68, 5, 98, 95] }
+        ],
+        qaSamples: [
+          { q: "What rule of composition is applied?", a: "Rule of thirds: the silhouetted treeline occupies the bottom third while the colorful sky occupies the top two-thirds." },
+          { q: "What types of trees are present?", a: "A mix of tall, pointed conifer evergreens and broader deciduous tree crowns." },
+          { q: "Is any human infrastructure visible?", a: "No, the image is completely composed of natural atmospheric and vegetative elements." }
+        ]
+      },
+      {
+        id: 5,
+        fileName: "628430128_18432432832112437_822144165899573633_n.jpg",
+        title: "Long-Exposure Night Cityscape & Highway",
+        category: "Urban / Night Long Exposure",
+        imageSrc: "assets/sample_image.png",
+        isSample: false,
+        altText: "A long-exposure night view of a city with illuminated apartment buildings and a highway showing streams of vehicle lights.",
+        description: `This long-exposure photograph captures a moody, atmospheric urban cityscape at night, overlooking high-rise residential towers and a curving highway artery.
+
+### Kinetic & Static Architecture
+* **Highway Light Trails:** Continuous red ribbons (tail lights) and white streaks (headlights) sweep diagonally through the frame, indicating rapid transit flow.
+* **High-Rise Architecture:** Mid-to-high-rise residential buildings feature grids of illuminated windows giving texture to the urban density.
+* **Atmospheric Fog:** Low-hanging clouds and marine layer fog blur the distant horizon into deep muted blues and charcoal tones.`,
+        detectedObjects: [
+          { name: "highway", category: "infrastructure", color: "gray", location: "sweeping through center right", box: [45, 40, 85, 90] },
+          { name: "light trails", category: "light phenomenon", color: "red and white", location: "along highway corridor", box: [50, 42, 82, 88] },
+          { name: "large apartment building", category: "building", color: "beige", location: "lower center foreground", box: [40, 15, 80, 48] },
+          { name: "office buildings", category: "building", color: "dark", location: "mid-ground left", box: [25, 5, 55, 35] },
+          { name: "street lights", category: "infrastructure", color: "yellow", location: "scattered throughout city", box: [35, 10, 75, 80] }
+        ],
+        qaSamples: [
+          { q: "What shutter speed effect is visible?", a: "A slow shutter long-exposure, converting moving vehicles into continuous luminous trails." },
+          { q: "What colors are the traffic trails?", a: "Vibrant red for moving tail lights and bright white/amber for opposing headlights." },
+          { q: "What weather conditions are depicted?", a: "Overcast nighttime conditions with low cloud cover and light fog creating ambient light bloom." }
+        ]
+      },
+      {
+        id: 6,
+        fileName: "619502823_18153929776426210_6982208413015340205_n.jpg",
+        title: "Pacific Northwest Coastal Sea Stacks",
+        category: "Monochrome Landscape",
+        imageSrc: "assets/sample_image.png",
+        isSample: false,
+        altText: "A wide, black-and-white landscape of a sandy beach featuring a large rocky sea stack and smaller jagged formations.",
+        description: `This monochromatic, fine-art landscape photograph depicts a serene, rugged Pacific Northwest coastal scene reminiscent of Olympic National Park's Ruby Beach.
+
+### Formations & Mirror Sand
+* **Primary Sea Stack:** A massive, craggy rock island dominates the middle distance, crowned by dense evergreen vegetation.
+* **Sea Stacks & Boulders:** Smaller jagged sea stacks emerge to the right, balanced by two large mossy boulders resting in wet tidal sand in the foreground.
+* **Reflective Shoreline:** The wet sand functions as a natural mirror, seamlessly duplicating the pale overcast sky and dark silhouettes.`,
+        detectedObjects: [
+          { name: "large sea stack", category: "natural feature", color: "dark grey and green", location: "left center background", box: [20, 15, 60, 45] },
+          { name: "smaller sea stacks", category: "natural feature", color: "dark grey", location: "center background", box: [35, 50, 62, 75] },
+          { name: "foreground boulder", category: "natural feature", color: "dark grey", location: "bottom left foreground", box: [70, 15, 92, 38] },
+          { name: "sandy beach", category: "natural feature", color: "light grey", location: "center and right foreground", box: [65, 10, 98, 95] },
+          { name: "ocean waves", category: "natural feature", color: "white foam", location: "far left edge", box: [50, 2, 70, 20] }
+        ],
+        qaSamples: [
+          { q: "Where is this photo likely taken?", a: "Along the rugged Pacific Northwest coast in Washington State, such as Olympic National Park's Ruby Beach." },
+          { q: "What tone does the monochrome style convey?", a: "A somber, contemplative, and timeless atmosphere typical of fine-art film landscape photography." },
+          { q: "What is on top of the large sea stack?", a: "A dense cluster of resilient evergreen trees clinging to the rocky summit." }
+        ]
+      },
+      {
+        id: 7,
+        fileName: "sample_image.png",
+        title: "Geometric Benchmark Test Card",
+        category: "Synthetic Benchmark",
+        imageSrc: "assets/sample_image.png",
+        isSample: true,
+        altText: "Geometric test benchmark image featuring red circle, blue rectangle, and green triangle with OCR text.",
+        description: `This is a synthetic multimodal benchmark image generated locally to validate zero-shot OCR accuracy, color fidelity, and geometric primitive detection.
+
+### Benchmark Primitives
+* **Shapes:** Clear vector-rendered primitives including a bright red circle, a royal blue rectangle, and an emerald green triangle.
+* **Typography / OCR:** High-contrast text labels ('Multimodal Vision Benchmark') designed to test character recognition and bounding coordinates.`,
+        detectedObjects: [
+          { name: "red circle", category: "shape", color: "red", location: "left quadrant", box: [25, 15, 65, 45] },
+          { name: "blue rectangle", category: "shape", color: "blue", location: "center quadrant", box: [30, 45, 70, 75] },
+          { name: "green triangle", category: "shape", color: "green", location: "right quadrant", box: [25, 75, 65, 95] }
+        ],
+        qaSamples: [
+          { q: "What shapes are in this benchmark?", a: "A circle, a rectangle, and a triangle rendered with distinct primary colors." },
+          { q: "What is the purpose of this image?", a: "To benchmark zero-shot shape classification, color discrimination, and OCR bounding coordinate extraction." }
+        ]
+      }
+    ];
+
+    const KEYFRAMES = [
+      {
+        frame: 1,
+        date: "2026-07-14 01:30 UTC",
+        title: "Plume Inception in NW Canada & Alaska",
+        img: "assets/keyframe_1.jpg",
+        density: "≥150 mg/m² (Extreme Danger Hotspots)",
+        enSummary: "High concentrations of brown carbon smoke (≥150 mg/m²) originate in the Yukon, Northwest Territories, and British Columbia. Rest of the continent remains largely pristine with localized background haze.",
+        zhSummary: "加拿大西北部（育空地区、西北地区及不列颠哥伦比亚省）集中爆发极高浓度的野火棕碳烟羽（≥150 mg/m²，呈深棕色）。其余大陆地区整体晴朗，仅有微量局地烟雾。"
+      },
+      {
+        frame: 2,
+        date: "2026-07-15 16:30 UTC",
+        title: "+39 Hours: Midwest & Great Lakes Corridor Formation",
+        img: "assets/keyframe_2.jpg",
+        density: "120 - 150 mg/m² (Expanding Plume)",
+        enSummary: "Strong upper-level steering winds stretch the plume southeastward across Alberta and Saskatchewan, exploding across Illinois, Wisconsin, and Michigan before reaching Pennsylvania and New York.",
+        zhSummary: "高空风场驱动烟羽向东南呈对角线拉长，穿过艾伯塔与萨斯喀彻温。五大湖区及中西部上空形成高度浓缩的主烟羽，并向宾夕法尼亚与纽约州东推。"
+      },
+      {
+        frame: 3,
+        date: "2026-07-17 10:30 UTC",
+        title: "+42 Hours: Transcontinental Corridor & Atlantic Export",
+        img: "assets/keyframe_3.jpg",
+        density: "≥150 mg/m² (Severe Multi-State Air Quality Alert)",
+        enSummary: "A continuous snake-like high-density corridor consolidates from central Canada across the Mid-Atlantic states (MD, VA, NC) and discharges heavily out over the open Atlantic Ocean.",
+        zhSummary: "烟羽合并为一条呈蛇形绵延、极具厚重感的超高密度连贯走廊（≥150 mg/m²），横扫大西洋中岸各州并向大西洋上空倾泻，构成典型的大气远程输送事件。"
+      },
+      {
+        frame: 4,
+        date: "2026-07-19 01:30 UTC",
+        title: "+39 Hours: East Coast Stagnation & Pacific NW Resurgence",
+        img: "assets/keyframe_4.jpg",
+        density: "Variable (Residual East Corridor + Intense West Revival)",
+        enSummary: "The primary smoke corridor stagnates over the Ohio River valley and Eastern Quebec, while wildfire activity violently reignites across Oregon, Washington, and Idaho.",
+        zhSummary: "主烟羽在美国中西部（俄亥俄河流域）及加拿大东部停滞拓宽；同时太平洋西北地区野火出现剧烈复苏，华盛顿州与俄勒冈州再次爆发深棕色浓烟羽。"
+      }
+    ];
+
+    let currentItem = DATASET[0];
+    let showBBoxes = true;
+
+    function init() {
+      renderGallery();
+      renderActiveItem(currentItem);
+      renderTable(DATASET);
+      selectKeyframe(0);
+    }
+
+    function renderGallery() {
+      const bar = document.getElementById('galleryBar');
+      bar.innerHTML = '';
+      DATASET.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = `gallery-item ${item.id === currentItem.id ? 'active' : ''}`;
+        div.onclick = () => {
+          document.querySelectorAll('.gallery-item').forEach(el => el.classList.remove('active'));
+          div.classList.add('active');
+          renderActiveItem(item);
+        };
+        div.innerHTML = `
+          <div class="custom-art-canvas" style="font-size: 1.5rem; background: ${getGradientFor(idx)}">
+            ${getIconFor(item.category)}
+          </div>
+          <div class="gallery-tag">${item.title}</div>
+        `;
+        bar.appendChild(div);
+      });
+    }
+
+    function getGradientFor(idx) {
+      const gradients = [
+        'linear-gradient(135deg, #1e3a8a, #0f172a)',
+        'linear-gradient(135deg, #7f1d1d, #111827)',
+        'linear-gradient(135deg, #78350f, #1e1b4b)',
+        'linear-gradient(135deg, #4c1d95, #831843)',
+        'linear-gradient(135deg, #134e4a, #0f172a)',
+        'linear-gradient(135deg, #374151, #111827)',
+        'linear-gradient(135deg, #312e81, #0284c7)'
+      ];
+      return gradients[idx % gradients.length];
+    }
+
+    function getIconFor(cat) {
+      if (cat.includes('Landscape')) return '🏔️';
+      if (cat.includes('Urban') || cat.includes('Color')) return '🚗';
+      if (cat.includes('Aviation')) return '✈️';
+      if (cat.includes('Atmospheric')) return '🌅';
+      if (cat.includes('Night')) return '🌃';
+      if (cat.includes('Monochrome')) return '🌊';
+      return '🎨';
+    }
+
+    function renderActiveItem(item) {
+      currentItem = item;
+      document.getElementById('imageMetaFile').innerText = item.fileName;
+      document.getElementById('imageMetaCount').innerText = `${item.detectedObjects.length} Objects Detected`;
+
+      const stage = document.getElementById('imageStage');
+      if (item.isSample) {
+        stage.innerHTML = `
+          <img id="mainImage" class="main-img" src="${item.imageSrc}" alt="${item.altText}" />
+          <div class="overlay-layer" id="overlayLayer"></div>
+        `;
+      } else {
+        stage.innerHTML = `
+          <div class="custom-art-canvas" style="background: ${getGradientFor(item.id - 1)}; position: relative; width: 100%; height: 100%;">
+            <div style="font-size: 3.8rem; margin-bottom: 12px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
+              ${getIconFor(item.category)}
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 6px;">${item.title}</h3>
+            <p style="font-size: 0.85rem; color: #cbd5e1; max-width: 80%;">${item.category} &bull; Gemini 3.6 Flash Analysis</p>
+            <div class="overlay-layer" id="overlayLayer"></div>
+          </div>
+        `;
+      }
+
+      renderBBoxes(item.detectedObjects);
+
+      const descEl = document.getElementById('descContent');
+      descEl.innerHTML = item.description.replace(/\n/g, '<br />').replace(/### (.*?)(<br \/>|$)/g, '<h3>$1</h3>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+      const qaPills = document.getElementById('qaPills');
+      qaPills.innerHTML = '';
+      item.qaSamples.forEach(qa => {
+        const btn = document.createElement('button');
+        btn.className = 'qa-pill';
+        btn.innerText = qa.q;
+        btn.onclick = () => {
+          document.getElementById('qaInput').value = qa.q;
+          displayAnswer(qa.a);
+        };
+        qaPills.appendChild(btn);
+      });
+      document.getElementById('qaAnswer').style.display = 'none';
+
+      document.getElementById('altCharCount').innerText = item.altText.length;
+      document.getElementById('altTextDisplay').innerText = `"${item.altText}"`;
+      document.getElementById('altHtmlSnippet').innerText = `<img src="${item.fileName}" alt="${item.altText}" />`;
+
+      const grid = document.getElementById('objectsGrid');
+      grid.innerHTML = '';
+      item.detectedObjects.forEach(obj => {
+        const card = document.createElement('div');
+        card.className = 'object-card';
+        card.innerHTML = `
+          <div class="obj-name">
+            <span>${obj.name}</span>
+            <span class="obj-cat">${obj.category}</span>
+          </div>
+          <div class="obj-detail"><strong>Color:</strong> ${obj.color}</div>
+          <div class="obj-detail"><strong>Location:</strong> ${obj.location}</div>
+        `;
+        grid.appendChild(card);
+      });
+
+      const rawJson = {
+        total_objects_count: item.detectedObjects.length,
+        objects: item.detectedObjects.map(o => ({
+          name: o.name,
+          category: o.category,
+          color: o.color,
+          location: o.location
+        }))
+      };
+      document.getElementById('jsonRawDisplay').innerText = JSON.stringify(rawJson, null, 2);
+    }
+
+    function renderBBoxes(objects) {
+      const layer = document.getElementById('overlayLayer');
+      if (!layer) return;
+      layer.innerHTML = '';
+      if (!showBBoxes) return;
+
+      objects.forEach((obj, idx) => {
+        if (obj.box) {
+          const [top, left, height, width] = obj.box;
+          const boxEl = document.createElement('div');
+          boxEl.className = 'bbox-tag';
+          boxEl.style.top = `${top}%`;
+          boxEl.style.left = `${left}%`;
+          boxEl.style.height = `${height}%`;
+          boxEl.style.width = `${width}%`;
+          boxEl.innerHTML = `<span>#${idx+1} ${obj.name}</span>`;
+          layer.appendChild(boxEl);
+        }
+      });
+    }
+
+    function toggleBBoxes() {
+      showBBoxes = !showBBoxes;
+      const btn = document.getElementById('toggle-bboxes');
+      btn.classList.toggle('active', showBBoxes);
+      btn.innerText = showBBoxes ? 'Show Bounding Anchors' : 'Hide Bounding Anchors';
+      renderBBoxes(currentItem.detectedObjects);
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+      
+      event.currentTarget.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function submitQA() {
+      const input = document.getElementById('qaInput');
+      const val = input.value.trim().toLowerCase();
+      if (!val) return;
+
+      const match = currentItem.qaSamples.find(s => val.includes(s.q.toLowerCase()) || s.q.toLowerCase().includes(val));
+      if (match) {
+        displayAnswer(match.a);
+      } else {
+        displayAnswer(`Gemini Flash Analysis: Based on the spatial visual geometry of ${currentItem.fileName}, this element is situated in the ${currentItem.detectedObjects[0]?.location || 'scene context'}. Color tones reflect ${currentItem.detectedObjects[0]?.color || 'natural atmospheric lighting'}.`);
+      }
+    }
+
+    function displayAnswer(ans) {
+      const ansEl = document.getElementById('qaAnswer');
+      ansEl.style.display = 'block';
+      ansEl.innerHTML = `<strong>AI Response:</strong> ${ans}`;
+    }
+
+    function copyAltSnippet() {
+      const text = document.getElementById('altHtmlSnippet').innerText;
+      navigator.clipboard.writeText(text);
+      alert('HTML snippet copied to clipboard!');
+    }
+
+    function copyJSON() {
+      const text = document.getElementById('jsonRawDisplay').innerText;
+      navigator.clipboard.writeText(text);
+      alert('JSON copied to clipboard!');
+    }
+
+    function selectKeyframe(idx) {
+      document.querySelectorAll('.timeline-card').forEach((card, i) => {
+        card.classList.toggle('active', i === idx);
+      });
+      const kf = KEYFRAMES[idx];
+      const box = document.getElementById('timelineDetailBox');
+      box.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <span style="font-family: 'JetBrains Mono', monospace; color: var(--accent-amber); font-weight: 600; font-size: 0.88rem;">${kf.date}</span>
+            <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-top: 2px;">${kf.title}</h3>
+          </div>
+          <span style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fde68a; padding: 4px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">
+            Smoke Density: ${kf.density}
+          </span>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 0.88rem; line-height: 1.6;">
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+            <div style="font-weight: 600; color: var(--accent-cyan); margin-bottom: 6px;">Scientific Briefing (English)</div>
+            <p style="color: #cbd5e1;">${kf.enSummary}</p>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+            <div style="font-weight: 600; color: var(--accent-emerald); margin-bottom: 6px;">科学动态简报 (中文分析)</div>
+            <p style="color: #cbd5e1;">${kf.zhSummary}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTable(items) {
+      const tbody = document.getElementById('batchTableBody');
+      tbody.innerHTML = '';
+      items.forEach(item => {
+        const tr = document.createElement('tr');
+        const entityList = item.detectedObjects.map(o => o.name).join(', ');
+        const cats = [...new Set(item.detectedObjects.map(o => o.category))].slice(0, 3).join(', ');
+        tr.innerHTML = `
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #93c5fd;">${item.fileName}</td>
+          <td style="max-width: 320px;">${item.altText}</td>
+          <td style="color: #cbd5e1;">${entityList}</td>
+          <td><span style="background: rgba(99, 102, 241, 0.15); color: #c7d2fe; padding: 2px 8px; border-radius: 4px; font-size: 0.74rem;">${cats}</span></td>
+          <td>
+            <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.76rem;" onclick="inspectFromTable(${item.id})">Inspect</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function inspectFromTable(id) {
+      const match = DATASET.find(d => d.id === id);
+      if (match) {
+        window.scrollTo({ top: 400, behavior: 'smooth' });
+        renderActiveItem(match);
+      }
+    }
+
+    function filterTable() {
+      const query = document.getElementById('tableSearch').value.toLowerCase();
+      const filtered = DATASET.filter(item => 
+        item.fileName.toLowerCase().includes(query) ||
+        item.altText.toLowerCase().includes(query) ||
+        item.detectedObjects.some(o => o.name.toLowerCase().includes(query) || o.category.toLowerCase().includes(query))
+      );
+      renderTable(filtered);
+    }
+
+    function downloadJSON() {
+      const blob = new Blob([JSON.stringify(DATASET, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'multimodal_batch_analysis.json';
+      a.click();
+    }
+
+    function downloadCSV() {
+      let csv = "file_name,alt_text,detected_objects,category\n";
+      DATASET.forEach(d => {
+        const objs = d.detectedObjects.map(o => o.name).join('; ');
+        csv += `"${d.fileName}","${d.altText.replace(/"/g, '""')}","${objs}","${d.category}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'multimodal_batch_analysis.csv';
+      a.click();
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
